@@ -5,27 +5,31 @@ import Hero from '../../types/hero';
 import HEROES from '../../mock-heroes';
 
 const Heroes = () => {
-    const [hero, setHero] = useState<Hero>({
-        id: 1,
-        name: 'Windstorm'
-    });
-    const [heroes] = useState<Hero[]>(HEROES);
+    const [selectedHero, setSelectedHero] = useState<Hero>();
+    const [heroes, setHeroes] = useState<Hero[]>(HEROES);
 
     return (
         <Fragment>
-            <SubTitle>{hero.name.toUpperCase()} Details</SubTitle>
+            <SubTitle>My Heroes</SubTitle>
             <HeroList>
                 {heroes.map(hero =>
-                    <HeroItem>
+                    <HeroItem key={hero.id} onClick={() => setSelectedHero(hero)} selected={selectedHero && (hero.id === selectedHero.id)}>
                         <HeroBadge>{hero.id}</HeroBadge> {hero.name}
-                    </HeroItem>)
-                }
+                    </HeroItem>)}
             </HeroList>
-            <div><span>id: </span>{hero.id}</div>
-            <div>
-                <label htmlFor="name">Hero name: </label>
-                <HeroInput id="name"  placeholder="name" value={hero.name} onChange={evt => setHero({...hero, name: evt.target.value})} />
-            </div>
+            {selectedHero &&
+                <Fragment>
+                    <SubTitle>{selectedHero.name.toUpperCase()} Details</SubTitle>
+                    <div><span>id: </span>{selectedHero.id}</div>
+                    <div>
+                        <label htmlFor="name">Hero name: </label>
+                        <HeroInput id="name"  placeholder="name" value={selectedHero.name} onChange={evt => {
+                            setSelectedHero({...selectedHero, name: evt.target.value});
+                            setHeroes(heroes.map(hero => hero.id !== selectedHero.id ? hero : selectedHero));
+                        }} />
+                    </div>
+                </Fragment>}
+            
         </Fragment>
     )
 }

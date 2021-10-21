@@ -9,19 +9,24 @@ export const HeroList = styled.ul`
     padding: 0;
     width: 15em;
 `
-export const HeroItem = styled.li`
+export const HeroItem = styled.li<{selected: boolean | undefined}>`
     cursor: pointer;
     position: relative;
     left: 0;
-    background-color: #EEE;
+    background-color: ${props => props.selected ? 'black' : '#EEE'};
+    color: ${props => props.selected ? 'white' : 'inherit'};
     margin: .5em;
     padding: .3em 0;
     height: 1.6em;
     border-radius: 4px;
     &:hover {
-        color: #2c3a41;
-        background-color: #e6e6e6;
+        color: ${props => props.selected ? 'white' : '#2c3a41'};
+        background-color: ${props => props.selected ? '#505050' : '#e6e6e6'};
         left: .1em;
+    }
+    &:active {
+        background-color: ${props => props.selected ? 'black' : '#EEE'};
+        color: ${props => props.selected ? 'white' : 'inherit'}
     }
 `
 export const HeroBadge = styled.span`

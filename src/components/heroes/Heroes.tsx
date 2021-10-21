@@ -1,8 +1,9 @@
-import { useState, Fragment } from 'react';
+import { useState, Fragment, ChangeEvent } from 'react';
 import SubTitle from '../../styles/SubTitle';
-import { HeroInput, HeroList, HeroItem, HeroBadge } from '../../styles/Hero';
+import { HeroList, HeroItem, HeroBadge } from '../../styles/Hero';
 import Hero from '../../types/hero';
 import HEROES from '../../mock-heroes';
+import HeroDetail from '../hero-detail/HeroDetail';
 
 const Heroes = () => {
     const [selectedHero, setSelectedHero] = useState<Hero>();
@@ -17,19 +18,10 @@ const Heroes = () => {
                         <HeroBadge>{hero.id}</HeroBadge> {hero.name}
                     </HeroItem>)}
             </HeroList>
-            {selectedHero &&
-                <Fragment>
-                    <SubTitle>{selectedHero.name.toUpperCase()} Details</SubTitle>
-                    <div><span>id: </span>{selectedHero.id}</div>
-                    <div>
-                        <label htmlFor="name">Hero name: </label>
-                        <HeroInput id="name"  placeholder="name" value={selectedHero.name} onChange={evt => {
-                            setSelectedHero({...selectedHero, name: evt.target.value});
-                            setHeroes(heroes.map(hero => hero.id !== selectedHero.id ? hero : selectedHero));
-                        }} />
-                    </div>
-                </Fragment>}
-            
+            {selectedHero && <HeroDetail hero={selectedHero} onHeroInputChange={(evt: ChangeEvent<HTMLInputElement>) => {
+                setSelectedHero({...selectedHero, name: evt.target.value});
+                setHeroes(heroes.map(hero => hero.id !== selectedHero.id ? hero : selectedHero));
+            }} />}
         </Fragment>
     )
 }

@@ -1,7 +1,10 @@
 import { Fragment } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import Title from './styles/Title';
 import Heroes from './components/heroes/Heroes';
+import HeroDetail from './components/hero-detail/HeroDetail';
+import Dashboard from './components/dashboard/Dashboard';
 import Messages from './components/messages/Messages';
 import { storeTypes } from './store/configureStore';
 import { setTitle } from './actions/titleAction';
@@ -13,8 +16,18 @@ function App() {
 
   return (
     <Fragment>
-      <Title>{title}</Title>
-      <Heroes />
+      <Router>
+        <Title>{title}</Title>
+        <nav>
+          <Link to="/dashboard">Dashboard</Link>
+          <Link to="/heroes">Heros</Link>
+        </nav>
+        <Switch>
+          <Route path='/dashboard' render={() => <Dashboard />}></Route>
+          <Route path='/detail/:id' render={props => <HeroDetail {...props} />}></Route>
+          <Route path='/heroes' render={() => <Heroes />}></Route>
+        </Switch>
+      </Router>
       <Messages />
     </Fragment>
   );

@@ -8,13 +8,16 @@ export const HeroList = styled.ul`
     list-style-type: none;
     padding: 0;
     width: 15em;
+    a {
+        text-decoration: none;
+    }
 `
 export const HeroItem = styled.li<{selected: boolean | undefined}>`
     cursor: pointer;
     position: relative;
     left: 0;
     background-color: ${props => props.selected ? 'black' : '#EEE'};
-    color: ${props => props.selected ? 'white' : 'inherit'};
+    color: ${props => props.selected ? 'white' : '#333'};
     margin: .5em;
     padding: .3em 0;
     height: 1.6em;

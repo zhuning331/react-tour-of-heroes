@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom';
 import Title from './styles/Title';
 import Heroes from './components/heroes/Heroes';
 import HeroDetail from './components/hero-detail/HeroDetail';
@@ -23,9 +23,10 @@ function App() {
           <Link to="/heroes">Heros</Link>
         </nav>
         <Switch>
-          <Route path='/dashboard' render={() => <Dashboard />}></Route>
-          <Route path='/detail/:id' render={props => <HeroDetail {...props} />}></Route>
-          <Route path='/heroes' render={() => <Heroes />}></Route>
+          <Route path='/dashboard' render={() => <Dashboard />} />
+          <Route path='/detail/:id' render={props => <HeroDetail {...props} />} />
+          <Route path='/heroes' render={() => <Heroes />} />
+          <Redirect from='/' to='/dashboard' />
         </Switch>
       </Router>
       <Messages />

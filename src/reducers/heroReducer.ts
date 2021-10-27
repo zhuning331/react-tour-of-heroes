@@ -1,5 +1,4 @@
-import { ISetHeroAction, SET_HERO, SET_HEROES } from '../actions/heroAction';
-import HEROES from '../mock-heroes';
+import { ISetHeroAction, SET_HERO, SET_HEROES, GET_HEROES, GET_HERO, UPDATE_HERO } from '../actions/heroAction';
 import Hero from '../types/hero';
 
 export interface IHeroState {
@@ -9,7 +8,7 @@ export interface IHeroState {
 
 const initialState: IHeroState = {
     hero: undefined,
-    heroes: HEROES
+    heroes: []
 }
 
 const heroReducer = (state = initialState, action: ISetHeroAction): IHeroState => {
@@ -24,6 +23,20 @@ const heroReducer = (state = initialState, action: ISetHeroAction): IHeroState =
                 ...state,
                 heroes: state.heroes.map(hero => hero.id !== action.payload.newHero.id ? hero : action.payload.newHero) 
             }
+        case GET_HEROES:
+            return {
+                ...state,
+                heroes: action.payload
+            }
+        case GET_HERO:
+            return {
+                ...state,
+                hero: action.payload
+            }
+        case UPDATE_HERO:
+            return {
+                ...state
+            }    
         default:
             return state;
     }

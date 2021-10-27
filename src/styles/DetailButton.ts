@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
-const BackButton = styled.button`
+const DetailButton = styled.button`
     margin-top: 20px;
+    margin-right: 0.5rem;
     background-color: #eee;
     padding: 1rem;
     border: none;
@@ -19,4 +20,4 @@ const BackButton = styled.button`
     }
 `
 
-export default BackButton;
+export default DetailButton;

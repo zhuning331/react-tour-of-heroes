@@ -12,7 +12,7 @@ export const HeroList = styled.ul`
         text-decoration: none;
     }
 `
-export const HeroItem = styled.li<{selected: boolean | undefined}>`
+export const HeroItem = styled.li<{selected?: boolean | undefined}>`
     cursor: pointer;
     position: relative;
     left: 0;
@@ -28,10 +28,13 @@ export const HeroItem = styled.li<{selected: boolean | undefined}>`
         left: .1em;
     }
     &:active {
-        background-color: ${props => props.selected ? 'black' : '#EEE'};
-        color: ${props => props.selected ? 'white' : 'inherit'}
+        background-color: #525252;
+        color: #fafafa
     }
 `
+export const HeroDiv = styled.div`
+    position: relative;
+` 
 export const HeroBadge = styled.span`
     display: inline-block;
     font-size: small;

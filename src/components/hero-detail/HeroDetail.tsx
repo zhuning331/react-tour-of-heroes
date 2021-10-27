@@ -4,19 +4,23 @@ import { useSelector, useDispatch } from 'react-redux';
 import SubTitle from '../../styles/SubTitle';
 import { HeroInput } from '../../styles/Hero';
 import DetailLabel from '../../styles/DetailLabel';
-import BackButton from '../../styles/BackButton';
+import DetailButton from '../../styles/DetailButton';
 import { storeTypes } from '../../store/configureStore';
-import { addMessage } from '../../actions/messageAction';
-import { setHeroes } from '../../actions/heroAction';
+import { setHero, getHero, updateHero } from '../../actions/heroAction';
+import Hero from '../../types/hero';
 
 const HeroDetail = (props: RouteComponentProps<{id: string}>) => {
     const dispatch = useDispatch();
-    const heroes = useSelector((state: storeTypes) => state.heroReducer.heroes);
-    const hero = heroes.find(hero => hero.id === +props.match.params.id);
+    const hero = useSelector((state: storeTypes) => state.heroReducer.hero);
 
     useEffect(() => {
-        dispatch(addMessage(`Hero Detail: fetched hero id=${props.match.params.id}`));
+        dispatch(getHero(+props.match.params.id))
     }, [dispatch, props.match.params.id]);
+
+    const handleSave = (hero: Hero) => {
+        dispatch(updateHero(hero));
+        props.history.goBack();
+    }
 
     return (
         <Fragment>
@@ -27,9 +31,10 @@ const HeroDetail = (props: RouteComponentProps<{id: string}>) => {
                 <div>
                     <DetailLabel htmlFor="name">Hero name: </DetailLabel>
                     <HeroInput id="name"  placeholder="name" value={hero.name} onChange={(evt: ChangeEvent<HTMLInputElement>) => 
-                        dispatch(setHeroes({...hero, name: evt.target.value}))}/>
+                        dispatch(setHero({...hero, name: evt.target.value}))}/>
                 </div>
-                <BackButton onClick={() => props.history.goBack()}>go back</BackButton>
+                <DetailButton onClick={() => props.history.goBack()}>go back</DetailButton>
+                <DetailButton onClick={() => handleSave(hero)}>save</DetailButton>
             </Fragment>}
         </Fragment>
     )
